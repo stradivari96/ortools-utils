@@ -1,0 +1,8 @@
+# Dist
+dist/
+
+# PyCharm
+.idea/
+
+# Cache
+__pycache__
