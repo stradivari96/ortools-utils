@@ -12,6 +12,7 @@ def hint_solution(model: cp_model.CpModel, solver: cp_model.CpSolver) -> None:
 
 
 def hint_variable(model, var: cp_model.IntVar, value: int):
-    """Hint a variable, will be replaced by model.AddHint in ortools >= 7.3"""
+    """Deprecated, use model.AddHint in ortools >= 7.3"""
+    print('hint_variable is deprecated use model.AddHint')
     model.Proto().solution_hint.vars.append(var.Index())
     model.Proto().solution_hint.values.append(value)
