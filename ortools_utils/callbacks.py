@@ -9,7 +9,7 @@ class ObjectiveEarlyStopping(cp_model.CpSolverSolutionCallback):
         cp_model.CpSolverSolutionCallback.__init__(self)
         self._time_limit = time_limit
         self._print_objective = print_objective
-        self._timer = None
+        self._timer = None  # type: Timer
 
     def on_solution_callback(self):
         if self._print_objective:
@@ -29,3 +29,7 @@ class ObjectiveEarlyStopping(cp_model.CpSolverSolutionCallback):
             )
         )
         self.StopSearch()
+
+    def cancel(self):
+        """Cancel the timer, useful if reusing callback and solver"""
+        self._timer.cancel()
