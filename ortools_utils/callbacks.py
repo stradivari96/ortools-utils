@@ -32,4 +32,5 @@ class ObjectiveEarlyStopping(cp_model.CpSolverSolutionCallback):
 
     def cancel(self):
         """Cancel the timer, useful if reusing callback and solver"""
-        self._timer.cancel()
+        if self._timer:
+            self._timer.cancel()
