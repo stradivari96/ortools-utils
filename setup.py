@@ -3,9 +3,12 @@ import setuptools
 with open("README.md", "r") as fh:
     long_description = fh.read()
 
+# python setup.py sdist
+# twine upload --skip-existing --repository pypi dist/*
+
 setuptools.setup(
     name="ortools-utils",
-    version="0.0.8",
+    version="0.0.9",
     author="Xiang Chen",
     author_email="xiangchenchen96@gmail.com",
     description="Python utilities for ortools",
