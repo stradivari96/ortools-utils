@@ -55,10 +55,10 @@ def solve_intermediate_objective(
 
     if status == cp_model.INFEASIBLE:
         logging.warning(f'INFEASIBLE solving {alias or objective}\n')
-        raise Exception('The status is not Feasible')
+        return None, status
     elif status == cp_model.UNKNOWN:
         logging.warning(f'Time limit reached {alias or objective}\n')
-        raise Exception('The status is not Feasible')
+        return None, status
     result = int(solver.ObjectiveValue())
 
     if hint:

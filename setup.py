@@ -8,7 +8,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="ortools-utils",
-    version="0.0.11",
+    version="0.0.12",
     author="Xiang Chen",
     author_email="xiangchenchen96@gmail.com",
     description="Python utilities for ortools",
