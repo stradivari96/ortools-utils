@@ -6,14 +6,13 @@ from ortools.sat.python import cp_model
 class ObjectiveEarlyStopping(cp_model.CpSolverSolutionCallback):
     """Early Stopping based on Objective improvement"""
 
-    def __init__(
-        self, timer_limit: int, print_objective=False, time_limit=None
-    ):
+    def __init__(self, timer_limit: int, print_objective=False, max_time=None):
         cp_model.CpSolverSolutionCallback.__init__(self)
         self._timer_limit = timer_limit
         self._print_objective = print_objective
         self._timer = None  # type: Timer
-        self._end_time = time.time() + time_limit if time_limit else None
+        self._max_time = max_time
+        self._end_time = time.time() + max_time if max_time else None
 
     def on_solution_callback(self):
         if self._print_objective:
@@ -38,3 +37,7 @@ class ObjectiveEarlyStopping(cp_model.CpSolverSolutionCallback):
         """Cancel the timer if active"""
         if self._timer:
             self._timer.cancel()
+
+    def reset_end_time(self):
+        if self._end_time:
+            self._end_time = time.time() + self._max_time
