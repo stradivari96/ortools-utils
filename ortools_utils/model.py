@@ -59,7 +59,7 @@ def solve_intermediate_objective(
     elif status == cp_model.UNKNOWN:
         logging.warning(f'Time limit reached {alias or objective}')
         return None, status
-    result = int(solver.ObjectiveValue())
+    result = round(solver.ObjectiveValue())
 
     if hint:
         hint_solution(model, solver)
