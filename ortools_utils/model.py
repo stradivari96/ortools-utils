@@ -54,10 +54,10 @@ def solve_intermediate_objective(
     duration = (dt.datetime.now() - t0).total_seconds()
 
     if status == cp_model.INFEASIBLE:
-        logging.warning(f'INFEASIBLE solving {alias or objective}\n')
+        logging.warning(f'INFEASIBLE solving {alias or objective}')
         return None, status
     elif status == cp_model.UNKNOWN:
-        logging.warning(f'Time limit reached {alias or objective}\n')
+        logging.warning(f'Time limit reached {alias or objective}')
         return None, status
     result = int(solver.ObjectiveValue())
 
