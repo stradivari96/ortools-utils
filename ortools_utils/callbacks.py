@@ -22,25 +22,22 @@ class ObjectiveEarlyStopping(cp_model.CpSolverSolutionCallback):
         self._end_time = time.time() + max_time if max_time else None
 
     def on_solution_callback(self):
-        if self._print_objective:
-            self._print_or_log(self.ObjectiveValue())
+        objective = round(self.ObjectiveValue())
         self.cancel()
         if self._end_time and time.time() >= self._end_time:
-            self._print_or_log(
-                f'Time limit reached, obj: {self.ObjectiveValue()}'
-            )
+            self._print_or_log(f'Time limit reached, obj: {objective}')
             self.StopSearch()
         else:
             if not self._timer:
-                self._print_or_log(
-                    f'First objective found: {self.ObjectiveValue()}'
-                )
+                self._print_or_log(f'First objective found: {objective}')
+            elif self._print_objective:
+                self._print_or_log(objective)
             self._timer = Timer(self._timer_limit, self.stop)
             self._timer.start()
 
     def stop(self):
         self._print_or_log(
-            f'Objective {self.ObjectiveValue()} not changed in {self._timer_limit} seconds'
+            f'Objective {round(self.ObjectiveValue())} not changed in {self._timer_limit} seconds'
         )
         self.StopSearch()
 
