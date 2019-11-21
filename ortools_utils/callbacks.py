@@ -29,7 +29,7 @@ class ObjectiveEarlyStopping(cp_model.CpSolverSolutionCallback):
             self.StopSearch()
         else:
             if not self._timer:
-                self._print_or_log(f'First objective found: {objective}')
+                self._print_or_log(f'First obj: {objective}')
             elif self._print_objective:
                 self._print_or_log(objective)
             self._timer = Timer(self._timer_limit, self.stop)
@@ -37,7 +37,7 @@ class ObjectiveEarlyStopping(cp_model.CpSolverSolutionCallback):
 
     def stop(self):
         self._print_or_log(
-            f'Objective {round(self.ObjectiveValue())} not changed in {self._timer_limit} seconds'
+            f'Obj {round(self.ObjectiveValue())} not changed in {self._timer_limit} sec'
         )
         self.StopSearch()
 
