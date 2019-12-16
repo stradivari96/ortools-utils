@@ -21,8 +21,8 @@ def check_hint(model: cp_model.CpModel) -> bool:
     solver = cp_model.CpSolver()
     variables = tmp_model.Proto().solution_hint.vars
     values = tmp_model.Proto().solution_hint.values
-    for i in range(len(variables)):
-        var = tmp_model.Proto().variables[i]
+    for i, var in enumerate(variables):
+        var = tmp_model.Proto().variables[var]
         value = values[i]
         lb, ub = var.domain
         if not (lb <= value <= ub):
