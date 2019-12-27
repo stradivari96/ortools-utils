@@ -31,7 +31,8 @@ def solve_intermediate_objective(
     objective_type='min',
     callback: Optional[cp_model.CpSolverSolutionCallback] = None,
     alias=None,
-    max_time=None
+    max_time=None,
+    logger=logging
 ):
 
     if max_time:
@@ -54,27 +55,27 @@ def solve_intermediate_objective(
     duration = (dt.datetime.now() - t0).total_seconds()
 
     if status == cp_model.INFEASIBLE:
-        logging.warning(f'INFEASIBLE solving {alias or objective}')
+        logger.warning(f'INFEASIBLE solving {alias or objective}')
         return None, status
     elif status == cp_model.UNKNOWN:
-        logging.warning(f'Time limit reached {alias or objective}')
+        logger.warning(f'Time limit reached {alias or objective}')
         return None, status
     result = round(solver.ObjectiveValue())
 
     if hint:
         hint_solution(model, solver)
     if status == cp_model.OPTIMAL:
-        logging.debug(
+        logger.debug(
             f'{alias or objective} == {result}, Seconds: {duration:.2f}'
         )
         model.Add(objective == result)
     elif objective_type == 'min':
-        logging.debug(
+        logger.debug(
             f'{alias or objective} <= {result}, Seconds: {duration:.2f}'
         )
         model.Add(objective <= result)
     elif objective_type == 'max':
-        logging.debug(
+        logger.debug(
             f'{alias or objective} >= {result}, Seconds: {duration:.2f}'
         )
         model.Add(objective >= result)
