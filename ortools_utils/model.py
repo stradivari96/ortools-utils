@@ -67,19 +67,20 @@ def solve_intermediate_objective(
 
     if hint:
         hint_solution(model, solver)
-    if status == cp_model.OPTIMAL:
-        logger.debug(
-            f'{alias or objective} == {result}, Seconds: {duration:.2f}'
-        )
-        model.Add(objective == result)
-    elif objective_type == 'min':
-        logger.debug(
-            f'{alias or objective} <= {result}, Seconds: {duration:.2f}'
-        )
-        model.Add(objective <= result)
-    elif objective_type == 'max':
-        logger.debug(
-            f'{alias or objective} >= {result}, Seconds: {duration:.2f}'
-        )
-        model.Add(objective >= result)
+    if not isinstance(objective, int):
+        if status == cp_model.OPTIMAL:
+            logger.debug(
+                f'{alias or objective} == {result}, Seconds: {duration:.2f}'
+            )
+            model.Add(objective == result)
+        elif objective_type == 'min':
+            logger.debug(
+                f'{alias or objective} <= {result}, Seconds: {duration:.2f}'
+            )
+            model.Add(objective <= result)
+        elif objective_type == 'max':
+            logger.debug(
+                f'{alias or objective} >= {result}, Seconds: {duration:.2f}'
+            )
+            model.Add(objective >= result)
     return result, status
