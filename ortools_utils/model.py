@@ -2,6 +2,7 @@ import logging
 import datetime as dt
 from typing import Optional
 from ortools.sat.python import cp_model
+from google.protobuf import text_format
 
 from .hinting import hint_solution
 
@@ -9,6 +10,12 @@ from .hinting import hint_solution
 def export_proto(model: cp_model.CpModel, filepath):
     with open(filepath, "w") as f:
         f.write(str(model.Proto()))
+
+
+def load_proto(model: cp_model.CpModel, filepath):
+    with open(filepath, "r") as f:
+        proto = f.read()
+    text_format.Parse(proto, model.Proto())
 
 
 def log_num_vars(
